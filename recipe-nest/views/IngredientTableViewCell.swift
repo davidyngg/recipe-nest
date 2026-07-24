@@ -37,6 +37,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         let symbolConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
         let checkboxButton = UIButton()
+        checkboxButton.contentHorizontalAlignment = .leading
         checkboxButton.setTitle(nil, for: .normal)
         checkboxButton.setImage(UIImage(systemName: "circle", withConfiguration: symbolConfig)?.withTintColor(.systemGray2, renderingMode: .alwaysOriginal), for: .normal)
         checkboxButton.setImage(
@@ -47,6 +48,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         let label = UILabel()
         label.text = ingredient
+        label.font = .systemFont(ofSize: 16)
         
         row.addArrangedSubview(checkboxButton)
         row.addArrangedSubview(label)
