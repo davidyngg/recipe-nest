@@ -48,7 +48,7 @@ class IngredientTableViewCell: UITableViewCell {
         
         let label = UILabel()
         label.text = ingredient
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 17)
         
         row.addArrangedSubview(checkboxButton)
         row.addArrangedSubview(label)

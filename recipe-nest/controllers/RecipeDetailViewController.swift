@@ -29,7 +29,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeHeaderViewCell", for: indexPath)
             as! RecipeHeaderViewCell
-            cell.configure(tags: ["vegan", "gluten-free", "dairy-free", "nut-free"])
+            cell.configure(name: "Spanish Omelette" ,tags: ["vegan", "gluten-free", "dairy-free", "nut-free"])
             return cell
         }
         

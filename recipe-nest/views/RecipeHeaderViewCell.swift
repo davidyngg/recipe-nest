@@ -10,16 +10,20 @@ import UIKit
 class RecipeHeaderViewCell: UITableViewCell {
     
     @IBOutlet weak var tagStack: UIStackView!
+    @IBOutlet weak var recipeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        recipeLabel.text = "Loading..."
         
         // Remove placeholder tags from the view
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
-    func configure(tags: [String]) {
+    func configure(name: String, tags: [String]) {
+        recipeLabel.text = name
+        recipeLabel.font = .systemFont(ofSize: 22, weight: .bold)
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         tags.forEach { tagStack.addArrangedSubview(makeTag($0)) }
     }

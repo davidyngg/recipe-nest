@@ -94,6 +94,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="recipeLabel" destination="fTd-sf-n8p" id="gcU-LI-NJD"/>
                                     <outlet property="tagStack" destination="2S8-bV-4ac" id="GXS-kE-WDt"/>
                                 </connections>
                             </tableViewCell>
