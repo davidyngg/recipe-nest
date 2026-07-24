@@ -35,11 +35,12 @@ class IngredientTableViewCell: UITableViewCell {
         row.axis = .horizontal
         row.spacing = 0
         
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .regular)
         let checkboxButton = UIButton()
         checkboxButton.setTitle(nil, for: .normal)
-        checkboxButton.setImage(UIImage(systemName: "circle")?.withTintColor(.systemGray2,renderingMode: .alwaysOriginal), for: .normal)
+        checkboxButton.setImage(UIImage(systemName: "circle", withConfiguration: symbolConfig)?.withTintColor(.systemGray2, renderingMode: .alwaysOriginal), for: .normal)
         checkboxButton.setImage(
-            UIImage(systemName: "checkmark.circle.fill")?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal), for: .selected)
+            UIImage(systemName: "checkmark.circle.fill", withConfiguration: symbolConfig)?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal), for: .selected)
         
         // Allow user to tap checkbox.
         checkboxButton.addTarget(self, action: #selector(checkboxTapped(_:)), for: .touchUpInside)
