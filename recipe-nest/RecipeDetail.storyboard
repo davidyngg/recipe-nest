@@ -136,18 +136,24 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hby-cv-YPm">
-                                            <rect key="frame" x="20" y="50" width="353" height="30"/>
+                                            <rect key="frame" x="20" y="50" width="353" height="44"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="V5k-on-Slp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXT-BU-mhI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="19.666666666666668" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="44" id="ZNc-oG-5dB"/>
+                                                                <constraint firstAttribute="height" constant="44" id="aPA-GT-fc6"/>
+                                                            </constraints>
                                                             <color key="tintColor" systemColor="systemGray2Color"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="circle" catalog="system"/>
+                                                            <state key="normal">
+                                                                <imageReference key="image" image="circle" catalog="system" symbolScale="large"/>
+                                                            </state>
                                                             <state key="selected">
-                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" renderingMode="hierarchical">
+                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="large" renderingMode="hierarchical">
                                                                     <hierarchicalColors>
                                                                         <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <color systemColor="linkColor"/>
@@ -157,110 +163,23 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Ingredient" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IP-5g-foh">
-                                                            <rect key="frame" x="27.666666666666657" y="0.0" width="325.33333333333337" height="30"/>
+                                                            <rect key="frame" x="52" y="0.0" width="301" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="u94-fQ-aHY"/>
-                                                    </constraints>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="3h9-f7-Vg2">
-                                                    <rect key="frame" x="0.0" y="30" width="353" height="0.0"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-nA-Ook">
-                                                            <rect key="frame" x="0.0" y="0.0" width="19.666666666666668" height="0.0"/>
-                                                            <color key="tintColor" systemColor="systemGray2Color"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="circle" catalog="system"/>
-                                                            <state key="selected">
-                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" renderingMode="hierarchical">
-                                                                    <hierarchicalColors>
-                                                                        <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                    </hierarchicalColors>
-                                                                </imageReference>
-                                                            </state>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Ingredient" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kXc-Xr-dtO">
-                                                            <rect key="frame" x="27.666666666666657" y="0.0" width="325.33333333333337" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Wvj-H4-Kbv"/>
-                                                    </constraints>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ceL-at-R2E">
-                                                    <rect key="frame" x="0.0" y="30" width="353" height="0.0"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgt-Em-f4X">
-                                                            <rect key="frame" x="0.0" y="0.0" width="19.666666666666668" height="0.0"/>
-                                                            <color key="tintColor" systemColor="systemGray2Color"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="circle" catalog="system"/>
-                                                            <state key="selected">
-                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" renderingMode="hierarchical">
-                                                                    <hierarchicalColors>
-                                                                        <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                    </hierarchicalColors>
-                                                                </imageReference>
-                                                            </state>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Ingredient" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0A-RJ-qP2">
-                                                            <rect key="frame" x="27.666666666666657" y="0.0" width="325.33333333333337" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="84H-cD-Nr4"/>
-                                                    </constraints>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4IV-I5-f5i">
-                                                    <rect key="frame" x="0.0" y="30" width="353" height="0.0"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kz3-Lo-8W2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="19.666666666666668" height="0.0"/>
-                                                            <color key="tintColor" systemColor="systemGray2Color"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="circle" catalog="system"/>
-                                                            <state key="selected">
-                                                                <imageReference key="image" image="checkmark.circle.fill" catalog="system" renderingMode="hierarchical">
-                                                                    <hierarchicalColors>
-                                                                        <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                        <color systemColor="linkColor"/>
-                                                                    </hierarchicalColors>
-                                                                </imageReference>
-                                                            </state>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Ingredient" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-eK-FBh">
-                                                            <rect key="frame" x="27.666666666666657" y="0.0" width="325.33333333333337" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Tbq-5U-osV"/>
+                                                        <constraint firstAttribute="height" constant="44" id="u94-fQ-aHY"/>
                                                     </constraints>
                                                 </stackView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="Hby-cv-YPm" secondAttribute="bottom" constant="20" symbolic="YES" id="1c1-EC-dMA"/>
                                         <constraint firstItem="Hby-cv-YPm" firstAttribute="leading" secondItem="PNk-iC-h8t" secondAttribute="leading" constant="20" symbolic="YES" id="L9H-D4-wl3"/>
                                         <constraint firstItem="CIu-xZ-ghj" firstAttribute="leading" secondItem="PNk-iC-h8t" secondAttribute="leading" constant="20" symbolic="YES" id="SMS-gW-XHZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="Hby-cv-YPm" secondAttribute="bottom" constant="20" symbolic="YES" id="V8J-0t-I3r"/>
                                         <constraint firstItem="Hby-cv-YPm" firstAttribute="top" secondItem="CIu-xZ-ghj" secondAttribute="bottom" constant="12" id="Z0C-dQ-rlr"/>
                                         <constraint firstAttribute="trailing" secondItem="Hby-cv-YPm" secondAttribute="trailing" constant="20" symbolic="YES" id="eNf-1y-imL"/>
                                         <constraint firstItem="CIu-xZ-ghj" firstAttribute="top" secondItem="PNk-iC-h8t" secondAttribute="top" constant="16" id="t0u-4G-hwn"/>
@@ -269,6 +188,10 @@
                             </tableViewCell>
                         </prototypes>
                         <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Y6W-OH-hqX" id="dSo-rc-e01"/>
+                            <outlet property="delegate" destination="Y6W-OH-hqX" id="dLg-te-e02"/>
+                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Recipe Details" id="wDr-Jk-NHm">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="sec-Vf-md3">
