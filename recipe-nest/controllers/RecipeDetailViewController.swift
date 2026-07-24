@@ -36,6 +36,11 @@ extension RecipeDetailViewController: UITableViewDataSource {
         ////
         // Recipe ingredients table cell
         ////
-        return tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
+        as! IngredientTableViewCell
+        
+        cell.configure(ingredients: ["2 cups flour", "1 tsp salt", "3 eggs", "1 cup milk"])
+        
+        return cell
     }
 }

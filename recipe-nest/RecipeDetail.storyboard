@@ -163,6 +163,9 @@
                                         <constraint firstItem="CIu-xZ-ghj" firstAttribute="top" secondItem="PNk-iC-h8t" secondAttribute="top" constant="16" id="t0u-4G-hwn"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ingredientTable" destination="Hby-cv-YPm" id="6pR-2k-xK9"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
