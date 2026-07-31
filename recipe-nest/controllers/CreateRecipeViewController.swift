@@ -24,6 +24,19 @@ class CreateRecipeViewController: UIViewController {
     // Called with the finished draft when the user taps Save.
     var onSave: ((DraftRecipe) -> Void)?
 
+    // When set, the form is prefilled for editing instead of starting blank.
+    private let draftToEdit: DraftRecipe?
+
+    init(draftToEdit: DraftRecipe? = nil) {
+        self.draftToEdit = draftToEdit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // Fields we read back on save.
     private let nameField = CreateRecipeViewController.makeTextField(placeholder: "e.g. Miso Butter Salmon")
     private let timeField = CreateRecipeViewController.makeTextField(placeholder: "45 min")
@@ -39,7 +52,6 @@ class CreateRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "New Recipe"
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped))
@@ -48,10 +60,22 @@ class CreateRecipeViewController: UIViewController {
 
         buildLayout()
 
-        // Start with two empty ingredient rows and one step, like the mockup.
-        addIngredientRow()
-        addIngredientRow()
-        addStepRow()
+        if let draft = draftToEdit {
+            // Editing an existing recipe: prefill everything from the draft.
+            title = "Edit Recipe"
+            nameField.text = draft.name
+            timeField.text = draft.time
+            servesField.text = draft.serves
+            draft.ingredients.forEach { addIngredientRow(text: $0) }
+            draft.steps.forEach { addStepRow(text: $0) }
+            if let image = draft.image { setImage(image) }
+        } else {
+            title = "New Recipe"
+            // Start with two empty ingredient rows and one step, like the mockup.
+            addIngredientRow()
+            addIngredientRow()
+            addStepRow()
+        }
 
         // Dismiss the keyboard when tapping empty space.
         let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
@@ -188,8 +212,9 @@ class CreateRecipeViewController: UIViewController {
     @objc private func addIngredientTapped() { addIngredientRow() }
     @objc private func addStepTapped() { addStepRow() }
 
-    private func addIngredientRow() {
+    private func addIngredientRow(text: String? = nil) {
         let field = CreateRecipeViewController.makeTextField(placeholder: "Add an ingredient…")
+        field.text = text
 
         let handle = UIImageView(image: UIImage(systemName: "line.3.horizontal"))
         handle.tintColor = .tertiaryLabel
@@ -213,7 +238,7 @@ class CreateRecipeViewController: UIViewController {
         ingredientsStack.addArrangedSubview(row)
     }
 
-    private func addStepRow() {
+    private func addStepRow(text: String? = nil) {
         let index = stepsStack.arrangedSubviews.count + 1
 
         let number = UILabel()
@@ -230,6 +255,7 @@ class CreateRecipeViewController: UIViewController {
 
         let field = CreateRecipeViewController.makeTextField(
             placeholder: index == 1 ? "Step 1 — what do we do first?" : "Step \(index)")
+        field.text = text
 
         let row = UIStackView(arrangedSubviews: [number, field])
         row.axis = .horizontal
