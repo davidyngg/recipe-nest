@@ -52,6 +52,9 @@ class CreateRecipeViewController: UIViewController {
     private let photoImageView = UIImageView()
     private var selectedImage: UIImage?
 
+    // The "Add photo" prompt inside the tile, hidden once a photo is picked.
+    private let photoPrompt = UIStackView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -172,12 +175,16 @@ class CreateRecipeViewController: UIViewController {
         subtitle.font = .systemFont(ofSize: 14)
         subtitle.textColor = .secondaryLabel
 
-        let prompt = UIStackView(arrangedSubviews: [plus, title, subtitle])
-        prompt.axis = .vertical
-        prompt.alignment = .center
-        prompt.spacing = 4
-        prompt.translatesAutoresizingMaskIntoConstraints = false
-        tile.addSubview(prompt)
+        photoPrompt.addArrangedSubview(plus)
+        photoPrompt.addArrangedSubview(title)
+        photoPrompt.addArrangedSubview(subtitle)
+        photoPrompt.axis = .vertical
+        photoPrompt.alignment = .center
+        photoPrompt.spacing = 4
+        // The prompt is decorative; let taps pass straight through to the tile.
+        photoPrompt.isUserInteractionEnabled = false
+        photoPrompt.translatesAutoresizingMaskIntoConstraints = false
+        tile.addSubview(photoPrompt)
 
         NSLayoutConstraint.activate([
             photoImageView.topAnchor.constraint(equalTo: tile.topAnchor),
@@ -185,8 +192,8 @@ class CreateRecipeViewController: UIViewController {
             photoImageView.leadingAnchor.constraint(equalTo: tile.leadingAnchor),
             photoImageView.trailingAnchor.constraint(equalTo: tile.trailingAnchor),
 
-            prompt.centerXAnchor.constraint(equalTo: tile.centerXAnchor),
-            prompt.centerYAnchor.constraint(equalTo: tile.centerYAnchor),
+            photoPrompt.centerXAnchor.constraint(equalTo: tile.centerXAnchor),
+            photoPrompt.centerYAnchor.constraint(equalTo: tile.centerYAnchor),
             plus.heightAnchor.constraint(equalToConstant: 28),
         ])
         return tile
@@ -346,6 +353,7 @@ class CreateRecipeViewController: UIViewController {
         selectedImage = image
         photoImageView.image = image
         photoImageView.isHidden = false
+        photoPrompt.isHidden = true
     }
 
     @objc private func cancelTapped() {
