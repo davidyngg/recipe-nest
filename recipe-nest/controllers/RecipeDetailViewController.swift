@@ -19,7 +19,7 @@ class RecipeDetailViewController: UIViewController {
 extension RecipeDetailViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -36,10 +36,26 @@ extension RecipeDetailViewController: UITableViewDataSource {
         ////
         // Recipe ingredients table cell
         ////
-        let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
-        as! IngredientTableViewCell
+        if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
+            as! IngredientTableViewCell
+            
+            cell.configure(ingredients: ["2 cups flour", "1 tsp salt", "3 eggs", "1 cup milk"])
+            
+            return cell
+        }
         
-        cell.configure(ingredients: ["2 cups flour", "1 tsp salt", "3 eggs", "1 cup milk"])
+        ////
+        // Recipe method table cell
+        ////
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MethodTableViewCell", for: indexPath)
+        as! MethodTableViewCell
+        
+        cell.configure(steps: [
+            "Step 1",
+            "Step 2",
+            "Step 3",
+        ])
         
         return cell
     }
