@@ -29,6 +29,9 @@ class CreateRecipeViewController: UIViewController {
     private let timeField = CreateRecipeViewController.makeTextField(placeholder: "45 min")
     private let servesField = CreateRecipeViewController.makeTextField(placeholder: "4")
 
+    // Time is chosen with an hours/minutes scroll wheel instead of typed.
+    private let timePicker = UIDatePicker()
+
     private let ingredientsStack = UIStackView()
     private let stepsStack = UIStackView()
 
@@ -47,6 +50,7 @@ class CreateRecipeViewController: UIViewController {
             barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
 
         buildLayout()
+        configureTimeInput()
 
         // Start with two empty ingredient rows and one step, like the mockup.
         addIngredientRow()
@@ -181,6 +185,46 @@ class CreateRecipeViewController: UIViewController {
         row.spacing = 16
         row.distribution = .fillEqually
         return row
+    }
+
+    // Swaps the Time field's keyboard for an hours/minutes countdown wheel.
+    // Tapping the field slides the wheel up; a Done button dismisses it.
+    private func configureTimeInput() {
+        timePicker.datePickerMode = .countDownTimer   // shows "hours" + "min" wheels
+        timePicker.minuteInterval = 5                 // 5-min steps suit cooking times
+        timePicker.addTarget(self, action: #selector(timeChanged), for: .valueChanged)
+
+        // Use the wheel as the field's input view instead of the keyboard.
+        timeField.inputView = timePicker
+        timeField.tintColor = .clear                  // hide the text caret; it's not typeable
+
+        // A small toolbar above the wheel with a Done button.
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        toolbar.items = [
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissTimePicker)),
+        ]
+        timeField.inputAccessoryView = toolbar
+    }
+
+    // Called each time the wheel moves; formats the duration into the field.
+    @objc private func timeChanged() {
+        timeField.text = CreateRecipeViewController.formatDuration(timePicker.countDownDuration)
+    }
+
+    @objc private func dismissTimePicker() {
+        view.endEditing(true)
+    }
+
+    // Turns a duration in seconds into a short label, e.g. "1 hr 30 min".
+    private static func formatDuration(_ seconds: TimeInterval) -> String {
+        let totalMinutes = Int(seconds) / 60
+        let hours = totalMinutes / 60
+        let minutes = totalMinutes % 60
+        if hours > 0 && minutes > 0 { return "\(hours) hr \(minutes) min" }
+        if hours > 0 { return "\(hours) hr" }
+        return "\(minutes) min"
     }
 
     // MARK: - Ingredient / step rows
