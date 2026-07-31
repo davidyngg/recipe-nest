@@ -8,6 +8,24 @@
 import UIKit
 
 class RecipeDetailViewController: UIViewController {
+
+    // TEMP: Default draft values.
+    var draft = DraftRecipe(
+        name: "Spanish Omelette",
+        time: "10 min",
+        serves: "4",
+        ingredients: ["2 large eggs", "1/2 cup milk", "1/4 cup grated Parmesan cheese", "Salt and pepper to taste"],
+        steps: ["Step 1", "Step 2", "Step 3"],
+        image: nil)
+
+    // TEMP: Misc tags
+    private let miscTags = ["misc-tag 1", "misc-tag 2"]
+
+    // Time and serves are shown as tag pills alongside the dietary tags.
+    private var tags: [String] {
+        [draft.time, "Serves " + draft.serves].filter { !$0.isEmpty } + miscTags
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,29 +35,14 @@ class RecipeDetailViewController: UIViewController {
 
     // Opens the shared recipe form prefilled with this recipe's data.
     @objc private func editRecipeTapped() {
-        let draft = DraftRecipe(
-            name: name,
-            time: time,
-            serves: serves,
-            ingredients: ingredients,
-            steps: steps,
-            image: nil)
         let editViewController = CreateRecipeViewController(draftToEdit: draft)
-        editViewController.onSave = { updatedDraft in
-            print("Recipe updated: \(updatedDraft.name)")
+        editViewController.onSave = { [weak self] updatedDraft in
+            self?.draft = updatedDraft
+            (self?.view as? UITableView)?.reloadData()
         }
         present(UINavigationController(rootViewController: editViewController), animated: true)
     }
 }
-
-// TEMP: Recipe test data
-let name = "Spanish Omelette"
-let time = "10 min"
-let serves = "4"
-let tags: [String] = [time, serves, "dairy-free", "nut-free"]
-let ingredients: [String] = ["2 large eggs", "1/2 cup milk", "1/4 cup grated Parmesan cheese", "Salt and pepper to taste"]
-let steps: [String] = ["Step 1", "Step 2", "Step 3"]
-// TEMP: Recipe test data
 
 // MARK: - UITableViewDataSource
 
@@ -56,7 +59,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeHeaderViewCell", for: indexPath)
             as! RecipeHeaderViewCell
-            cell.configure(name: name, tags: tags)
+            cell.configure(name: draft.name, tags: tags, image: draft.image)
             return cell
         }
         
@@ -67,7 +70,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
             as! IngredientTableViewCell
             
-            cell.configure(ingredients: ingredients)
+            cell.configure(ingredients: draft.ingredients)
             
             return cell
         }
@@ -78,7 +81,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MethodTableViewCell", for: indexPath)
         as! MethodTableViewCell
         
-        cell.configure(steps: steps)
+        cell.configure(steps: draft.steps)
         
         return cell
     }

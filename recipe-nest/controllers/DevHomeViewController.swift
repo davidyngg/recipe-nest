@@ -14,6 +14,10 @@ class DevHomeViewController: UIViewController {
     // Shows the result of the most recent save so we can see the round-trip work.
     private let resultLabel = UILabel()
 
+    // Shown once a recipe is saved and opens it in the recipe detail view.
+    private let viewRecipeButton = UIButton(configuration: .filled())
+    private var savedDraft: DraftRecipe?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -32,8 +36,15 @@ class DevHomeViewController: UIViewController {
         resultLabel.numberOfLines = 0
         resultLabel.textAlignment = .center
 
-        // Stack the button above the result label, centred on screen.
-        let stack = UIStackView(arrangedSubviews: [openButton, resultLabel])
+        // Hidden until the first recipe is saved.
+        viewRecipeButton.configuration?.title = "View Recipe"
+        viewRecipeButton.configuration?.baseBackgroundColor = .systemBlue
+        viewRecipeButton.configuration?.cornerStyle = .medium
+        viewRecipeButton.isHidden = true
+        viewRecipeButton.addTarget(self, action: #selector(viewRecipeTapped), for: .touchUpInside)
+
+        // Stack the button above the result label.
+        let stack = UIStackView(arrangedSubviews: [openButton, resultLabel, viewRecipeButton])
         stack.axis = .vertical
         stack.spacing = 24
         stack.alignment = .center
@@ -52,17 +63,34 @@ class DevHomeViewController: UIViewController {
         let createVC = CreateRecipeViewController()
 
         // When the user taps Save, CreateRecipeViewController hands us the draft
-        // through this callback. For now we just display what we received.
+        // through this callback. Keep it and offer a button to view it.
         createVC.onSave = { [weak self] draft in
-            self?.resultLabel.text = """
-            Saved: \(draft.name)
-            \(draft.ingredients.count) ingredients · \(draft.steps.count) steps
-            """
+            self?.savedDraft = draft
+            self?.resultLabel.isHidden = true
+            self?.viewRecipeButton.isHidden = false
         }
 
         // The Create screen uses a nav bar (Cancel / Save), so present it inside
         // a navigation controller. A page sheet is the modern modal style.
         let nav = UINavigationController(rootViewController: createVC)
+        present(nav, animated: true)
+    }
+
+    @objc private func viewRecipeTapped() {
+        guard let draft = savedDraft else { return }
+
+        // The detail view is the root of RecipeDetail.storyboard's navigation
+        // controller; instantiate it and hand over the saved draft.
+        let storyboard = UIStoryboard(name: "RecipeDetail", bundle: nil)
+        let nav = storyboard.instantiateInitialViewController() as! UINavigationController
+        let detailViewController = nav.topViewController as! RecipeDetailViewController
+        detailViewController.draft = draft
+
+        // Presented modally, so give it a way to close.
+        detailViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            systemItem: .close,
+            primaryAction: UIAction { _ in nav.dismiss(animated: true) })
+
         present(nav, animated: true)
     }
     

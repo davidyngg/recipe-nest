@@ -11,6 +11,7 @@ class RecipeHeaderViewCell: UITableViewCell {
     
     @IBOutlet weak var tagStack: UIStackView!
     @IBOutlet weak var recipeLabel: UILabel!
+    @IBOutlet weak var recipeImageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,17 +22,23 @@ class RecipeHeaderViewCell: UITableViewCell {
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
-    func configure(name: String, tags: [String]) {
+    func configure(name: String, tags: [String], image: UIImage? = nil) {
         recipeLabel.text = name
         recipeLabel.font = .systemFont(ofSize: 22, weight: .bold)
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         tags.forEach { tagStack.addArrangedSubview(makeTag($0)) }
+
+        if let image {
+            recipeImageView.image = image
+            recipeImageView.contentMode = .scaleAspectFill
+            recipeImageView.clipsToBounds = true
+        }
     }
     
     private func makeTag(_ text: String) -> UIView {
         let label = UILabel()
         label.text = text
-        label.font = .systemFont(ofSize: 13)
+        label.font = .systemFont(ofSize: 13, weight: .bold)
         label.textColor = .darkGray
         label.textAlignment = .center
         
