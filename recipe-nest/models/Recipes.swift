@@ -198,6 +198,14 @@ extension Recipe {
         return UIColor(hex: thumbnailColorHex)
     }
 
+    // Muted palette in the same family as the sample recipe colors.
+    private static let thumbnailPalette = ["#D98255", "#E8C79A", "#7A9A6E", "#B98A5A",
+                                           "#5F8A4E", "#D9B98A", "#C96F6F", "#6F8FA3"]
+
+    static func randomThumbnailColorHex() -> String {
+        thumbnailPalette.randomElement() ?? "#D98255"
+    }
+
     var stepList: [String] {
         steps ?? []
     }

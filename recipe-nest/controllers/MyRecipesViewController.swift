@@ -160,6 +160,7 @@ class MyRecipesViewController: UIViewController {
             guard let self else { return }
             let recipe = Recipe(context: store.context)
             recipe.id = UUID()
+            recipe.thumbnailColorHex = Recipe.randomThumbnailColorHex()
             recipe.apply(draft)
             store.add(recipe)
             collectionView.reloadData()
