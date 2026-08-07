@@ -59,7 +59,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeHeaderViewCell", for: indexPath)
             as! RecipeHeaderViewCell
-            cell.configure(name: recipe.name ?? "", tags: tags, image: nil, placeholderColor: recipe.thumbnailColor)
+            cell.configure(name: recipe.name ?? "", tags: tags, image: recipe.image, placeholderColor: recipe.thumbnailColor)
             return cell
         }
 

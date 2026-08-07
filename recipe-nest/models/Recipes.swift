@@ -202,6 +202,12 @@ extension Recipe {
         steps ?? []
     }
 
+    // Decodes the stored JPEG data for display.
+    var image: UIImage? {
+        guard let imageData else { return nil }
+        return UIImage(data: imageData)
+    }
+
     // Ingredients and tags come back from CoreData unordered; sort for display.
     var sortedIngredients: [Ingredient] {
         (ingredients?.allObjects as? [Ingredient])?.sorted { ($0.name ?? "") < ($1.name ?? "") } ?? []
@@ -237,6 +243,10 @@ extension Recipe {
         }
 
         steps = draft.steps
+
+        // The edit form is prefilled with the existing image, so this also
+        // preserves it when the user didn't pick a new one.
+        imageData = draft.image?.jpegData(compressionQuality: 0.8)
     }
 
     // Parses the form's time formats: "1 hr 30 min", "1 hr", "45 min".
@@ -269,7 +279,7 @@ extension DraftRecipe {
         serves = recipe.servings > 0 ? "\(recipe.servings)" : ""
         ingredients = recipe.sortedIngredients.compactMap(\.name)
         steps = recipe.stepList
-        image = nil
+        image = recipe.image
     }
 }
 

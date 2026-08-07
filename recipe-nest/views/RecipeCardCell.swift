@@ -16,6 +16,7 @@ class RecipeCardCell: UICollectionViewCell {
     weak var delegate: RecipeCardCellDelegate?
 
     private let thumbnailView = UIView()
+    private let thumbnailImageView = UIImageView()
     private let timeBadge = UILabel()
     private let nameLabel = UILabel()
 
@@ -34,6 +35,9 @@ class RecipeCardCell: UICollectionViewCell {
         thumbnailView.clipsToBounds = true
         thumbnailView.translatesAutoresizingMaskIntoConstraints = false
 
+        thumbnailImageView.contentMode = .scaleAspectFill
+        thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
+
         timeBadge.font = .systemFont(ofSize: 12, weight: .semibold)
         timeBadge.textColor = .white
         timeBadge.textAlignment = .center
@@ -46,6 +50,7 @@ class RecipeCardCell: UICollectionViewCell {
         nameLabel.numberOfLines = 1
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        thumbnailView.addSubview(thumbnailImageView)
         thumbnailView.addSubview(timeBadge)
         contentView.addSubview(thumbnailView)
         contentView.addSubview(nameLabel)
@@ -55,6 +60,11 @@ class RecipeCardCell: UICollectionViewCell {
             thumbnailView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             thumbnailView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             thumbnailView.heightAnchor.constraint(equalTo: thumbnailView.widthAnchor, multiplier: 0.85),
+
+            thumbnailImageView.topAnchor.constraint(equalTo: thumbnailView.topAnchor),
+            thumbnailImageView.leadingAnchor.constraint(equalTo: thumbnailView.leadingAnchor),
+            thumbnailImageView.trailingAnchor.constraint(equalTo: thumbnailView.trailingAnchor),
+            thumbnailImageView.bottomAnchor.constraint(equalTo: thumbnailView.bottomAnchor),
 
             timeBadge.leadingAnchor.constraint(equalTo: thumbnailView.leadingAnchor, constant: 8),
             timeBadge.bottomAnchor.constraint(equalTo: thumbnailView.bottomAnchor, constant: -8),
@@ -73,7 +83,9 @@ class RecipeCardCell: UICollectionViewCell {
     }
 
     func configure(with recipe: Recipe) {
+        // The thumbnail color shows through when the recipe has no photo.
         thumbnailView.backgroundColor = recipe.thumbnailColor
+        thumbnailImageView.image = recipe.image
         timeBadge.text = "  \(recipe.timeLabel)  "
         nameLabel.text = recipe.name
     }
