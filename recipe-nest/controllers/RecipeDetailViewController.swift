@@ -9,6 +9,9 @@ import UIKit
 
 class RecipeDetailViewController: UIViewController {
 
+    // Set by MyRecipesViewController when opening a recipe from the list.
+    var recipe: Recipe?
+
     // TEMP: Default draft values.
     var draft = DraftRecipe(
         name: "Spanish Omelette",
@@ -28,6 +31,10 @@ class RecipeDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let recipe {
+            title = recipe.name
+        }
 
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(editRecipeTapped)
