@@ -94,6 +94,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="recipeImageView" destination="43Y-bF-Lex" id="rIm-Ag-Evw"/>
                                     <outlet property="recipeLabel" destination="fTd-sf-n8p" id="gcU-LI-NJD"/>
                                     <outlet property="tagStack" destination="2S8-bV-4ac" id="GXS-kE-WDt"/>
                                 </connections>
@@ -168,6 +169,61 @@
                                     <outlet property="ingredientTable" destination="Hby-cv-YPm" id="6pR-2k-xK9"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MethodTableViewCell" rowHeight="114" id="AIK-dF-DX1" customClass="MethodTableViewCell" customModule="recipe_nest" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="464" width="393" height="114"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIK-dF-DX1" id="Gx1-JP-ODT">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="114"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Method" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEt-Hd-Lbl">
+                                            <rect key="frame" x="20" y="16" width="66" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="mEt-Hd-Hgt"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mEt-St-Vw">
+                                            <rect key="frame" x="20" y="50" width="353" height="44"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mEt-Ro-Vw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="1." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEt-Nu-Lb">
+                                                            <rect key="frame" x="0.0" y="23.666666666666671" width="28" height="20.333333333333329"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="28" id="mEt-Nu-Wd"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <color key="textColor" systemColor="linkColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Step" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEt-Tx-Lb">
+                                                            <rect key="frame" x="40" y="24.666666666666671" width="313" height="19.333333333333329"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="mEt-St-Vw" firstAttribute="leading" secondItem="Gx1-JP-ODT" secondAttribute="leading" constant="20" symbolic="YES" id="mEt-Cn-001"/>
+                                        <constraint firstItem="mEt-Hd-Lbl" firstAttribute="leading" secondItem="Gx1-JP-ODT" secondAttribute="leading" constant="20" symbolic="YES" id="mEt-Cn-002"/>
+                                        <constraint firstAttribute="bottom" secondItem="mEt-St-Vw" secondAttribute="bottom" constant="20" symbolic="YES" id="mEt-Cn-003"/>
+                                        <constraint firstItem="mEt-St-Vw" firstAttribute="top" secondItem="mEt-Hd-Lbl" secondAttribute="bottom" constant="12" id="mEt-Cn-004"/>
+                                        <constraint firstAttribute="trailing" secondItem="mEt-St-Vw" secondAttribute="trailing" constant="20" symbolic="YES" id="mEt-Cn-005"/>
+                                        <constraint firstItem="mEt-Hd-Lbl" firstAttribute="top" secondItem="Gx1-JP-ODT" secondAttribute="top" constant="16" id="mEt-Cn-006"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="methodTable" destination="mEt-St-Vw" id="mEt-Ou-let"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -188,6 +244,7 @@
         <!--Navigation Controller-->
         <scene sceneID="wDh-39-a3d">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GK3-Jt-zcL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iOt-U0-DXl" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YyU-9e-uyC">
@@ -199,7 +256,6 @@
                         <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="GCD-ub-8eA"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GK3-Jt-zcL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="138.1679389312977" y="130.98591549295776"/>
         </scene>
