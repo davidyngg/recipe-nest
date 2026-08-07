@@ -9,8 +9,13 @@ import UIKit
 
 class RecipeDetailViewController: UIViewController {
 
+    var recipe: Recipe?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let recipe {
+            title = recipe.name
+        }
     }
 }
 
@@ -29,18 +34,26 @@ extension RecipeDetailViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeHeaderViewCell", for: indexPath)
             as! RecipeHeaderViewCell
-            cell.configure(name: "Spanish Omelette" ,tags: ["vegan", "gluten-free", "dairy-free", "nut-free"])
+            if let recipe {
+                cell.configure(name: recipe.name, tags: recipe.tags)
+            } else {
+                cell.configure(name: "Spanish Omelette", tags: ["vegan", "gluten-free", "dairy-free", "nut-free"])
+            }
             return cell
         }
-        
+
         ////
         // Recipe ingredients table cell
         ////
         let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
         as! IngredientTableViewCell
-        
-        cell.configure(ingredients: ["2 cups flour", "1 tsp salt", "3 eggs", "1 cup milk"])
-        
+
+        if let recipe {
+            cell.configure(ingredients: recipe.ingredients.map { $0.displayText })
+        } else {
+            cell.configure(ingredients: ["2 cups flour", "1 tsp salt", "3 eggs", "1 cup milk"])
+        }
+
         return cell
     }
 }
