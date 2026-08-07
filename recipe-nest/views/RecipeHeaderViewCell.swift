@@ -22,7 +22,7 @@ class RecipeHeaderViewCell: UITableViewCell {
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
-    func configure(name: String, tags: [String], image: UIImage? = nil) {
+    func configure(name: String, tags: [String], image: UIImage? = nil, placeholderColor: UIColor? = nil) {
         recipeLabel.text = name
         recipeLabel.font = .systemFont(ofSize: 22, weight: .bold)
         tagStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -32,6 +32,10 @@ class RecipeHeaderViewCell: UITableViewCell {
             recipeImageView.image = image
             recipeImageView.contentMode = .scaleAspectFill
             recipeImageView.clipsToBounds = true
+        } else if let placeholderColor {
+            // Recipes without a photo show their card's thumbnail color.
+            recipeImageView.image = nil
+            recipeImageView.backgroundColor = placeholderColor
         }
     }
     

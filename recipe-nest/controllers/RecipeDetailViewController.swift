@@ -1,6 +1,6 @@
 //
 //  RecipeDetailViewController.swift
-//  
+//
 //
 //  Created by David Yang on 7/23/26.
 //
@@ -12,29 +12,16 @@ class RecipeDetailViewController: UIViewController {
     // Set by MyRecipesViewController when opening a recipe from the list.
     var recipe: Recipe?
 
-    // TEMP: Default draft values.
-    var draft = DraftRecipe(
-        name: "Spanish Omelette",
-        time: "10 min",
-        serves: "4",
-        ingredients: ["2 large eggs", "1/2 cup milk", "1/4 cup grated Parmesan cheese", "Salt and pepper to taste"],
-        steps: ["Step 1", "Step 2", "Step 3"],
-        image: nil)
-
-    // TEMP: Misc tags
-    private let miscTags = ["misc-tag 1", "misc-tag 2"]
-
     // Time and serves are shown as tag pills alongside the dietary tags.
     private var tags: [String] {
-        [draft.time, "Serves " + draft.serves].filter { !$0.isEmpty } + miscTags
+        guard let recipe else { return [] }
+        return [recipe.timeLabel, "Serves \(recipe.servings)"] + recipe.sortedTagTexts
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let recipe {
-            title = recipe.name
-        }
+        title = recipe?.name
 
         navigationItem.rightBarButtonItem?.target = self
         navigationItem.rightBarButtonItem?.action = #selector(editRecipeTapped)
@@ -42,10 +29,14 @@ class RecipeDetailViewController: UIViewController {
 
     // Opens the shared recipe form prefilled with this recipe's data.
     @objc private func editRecipeTapped() {
-        let editViewController = CreateRecipeViewController(draftToEdit: draft)
+        guard let recipe else { return }
+        let editViewController = CreateRecipeViewController(draftToEdit: DraftRecipe(recipe: recipe))
         editViewController.onSave = { [weak self] updatedDraft in
-            self?.draft = updatedDraft
-            (self?.view as? UITableView)?.reloadData()
+            guard let self, let recipe = self.recipe else { return }
+            recipe.apply(updatedDraft)
+            RecipeStore.shared.save()
+            self.title = recipe.name
+            (self.view as? UITableView)?.reloadData()
         }
         present(UINavigationController(rootViewController: editViewController), animated: true)
     }
@@ -56,40 +47,42 @@ class RecipeDetailViewController: UIViewController {
 extension RecipeDetailViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return recipe == nil ? 0 : 3
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let recipe else { return UITableViewCell() }
+
         ////
         // Recipe header table cell
         ////
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeHeaderViewCell", for: indexPath)
             as! RecipeHeaderViewCell
-            cell.configure(name: draft.name, tags: tags, image: draft.image)
+            cell.configure(name: recipe.name ?? "", tags: tags, image: nil, placeholderColor: recipe.thumbnailColor)
             return cell
         }
-        
+
         ////
         // Recipe ingredients table cell
         ////
         if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientTableViewCell", for: indexPath)
             as! IngredientTableViewCell
-            
-            cell.configure(ingredients: draft.ingredients)
-            
+
+            cell.configure(ingredients: recipe.sortedIngredients.compactMap(\.name))
+
             return cell
         }
-        
+
         ////
         // Recipe method table cell
         ////
         let cell = tableView.dequeueReusableCell(withIdentifier: "MethodTableViewCell", for: indexPath)
         as! MethodTableViewCell
-        
-        cell.configure(steps: draft.steps)
-        
+
+        cell.configure(steps: recipe.stepList)
+
         return cell
     }
 }

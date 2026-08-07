@@ -5,6 +5,7 @@
 //  Created by Noah Sellers on 7/31/26.
 //
 
+import CoreData
 import UIKit
 
 class MyRecipesViewController: UIViewController {
@@ -18,7 +19,7 @@ class MyRecipesViewController: UIViewController {
     private var filteredRecipes: [Recipe] {
         store.recipes.filter { recipe in
             (selectedCategory == "All" || recipe.category == selectedCategory) &&
-            (searchText.isEmpty || recipe.name.localizedCaseInsensitiveContains(searchText))
+            (searchText.isEmpty || (recipe.name ?? "").localizedCaseInsensitiveContains(searchText))
         }
     }
 
@@ -93,7 +94,7 @@ class MyRecipesViewController: UIViewController {
     // MARK: - Category chips
 
     private func setUpChips() {
-        categories = ["All"] + Array(Set(store.recipes.map(\.category))).sorted()
+        categories = ["All"] + Array(Set(store.recipes.compactMap(\.category))).sorted()
 
         chipStack.axis = .horizontal
         chipStack.spacing = 8
@@ -155,6 +156,14 @@ class MyRecipesViewController: UIViewController {
 
     @objc private func addRecipeTapped() {
         let createRecipeViewController = CreateRecipeViewController()
+        createRecipeViewController.onSave = { [weak self] draft in
+            guard let self else { return }
+            let recipe = Recipe(context: store.context)
+            recipe.id = UUID()
+            recipe.apply(draft)
+            store.add(recipe)
+            collectionView.reloadData()
+        }
         let navController = UINavigationController(rootViewController: createRecipeViewController)
         navController.modalPresentationStyle = .automatic
         present(navController, animated: true)
@@ -227,7 +236,7 @@ extension MyRecipesViewController: RecipeCardCellDelegate {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         let recipe = filteredRecipes[indexPath.item]
 
-        let alert = UIAlertController(title: "Delete \"\(recipe.name)\"?", message: "This can't be undone.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete \"\(recipe.name ?? "")\"?", message: "This can't be undone.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
             self?.store.delete(recipe)
